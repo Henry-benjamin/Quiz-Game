@@ -18,46 +18,46 @@ const quizQuestions = [
   {
     question: "what is the capital city of DRcongo?",
     answers: [
-      { text: "London", correct: false },
+      { text: "Bujumbura", correct: false },
       { text: "Berlin", correct: false },
       { text: "Kinshasa", correct: true },
-      { text: "Madrid", correct: false },
+      { text: "Nairobe", correct: false },
     ],
   },
   {
-    question: "what is the capital city of France?",
+    question: "which planet is known as the Red Planet?",
     answers: [
-      { text: "London", correct: false },
-      { text: "Berlin", correct: false },
-      { text: "Paris", correct: true },
-      { text: "Madrid", correct: false },
+      { text: "Venus", correct: false },
+      { text: "Mars", correct: true },
+      { text: "Jupiter", correct: false },
+      { text: "Saturn", correct: false },
     ],
   },
   {
-    question: "what is the capital city of Kenya?",
+    question: "what is the largest ocean on Earth?",
     answers: [
-      { text: "Kampala", correct: false },
-      { text: "Berlin", correct: false },
-      { text: "Nairobi", correct: true },
-      { text: "Madrid", correct: false },
+      { text: "Atlantic Ocean", correct: false },
+      { text: "Indian Ocean", correct: false },
+      { text: "Arctic Ocean", correct: false },
+      { text: "Pacific Ocean", correct: true },
     ],
   },
   {
-    question: "what is the capital city of Rwanda?",
+    question: "which of these is NOT a programming language?",
     answers: [
-      { text: "London", correct: false },
-      { text: "Kigali", correct: true },
-      { text: "Berlin", correct: false },
-      { text: "Madrid", correct: false },
+      { text: "Hba", correct: true },
+      { text: "Java", correct: false },
+      { text: "Python", correct: false },
+      { text: "JavaScript", correct: false },
     ],
   },
   {
-    question: "what is the capital city of France?",
+    question: "what is the chemical symbolel for gold?",
     answers: [
-      { text: "London", correct: false },
-      { text: "Berlin", correct: false },
-      { text: "Paris", correct: true },
-      { text: "Madrid", correct: false },
+      { text: "Go", correct: false },
+      { text: "Gd", correct: false },
+      { text: "Au", correct: true },
+      { text: "Ag", correct: false },
     ],
   },
 ];
@@ -91,7 +91,7 @@ function showQuestion() {
   // reset sate
   answersDisabled = false;
 
-  const curentQuestion = quizQuestions[currentQuestionIndex];
+  const currentQuestion = quizQuestions[currentQuestionIndex];
 
   currentQuestionSpan.textContent = currentQuestionIndex + 1;
 
@@ -131,7 +131,7 @@ function selectAnswer(event) {
     if (button.dataset.correct === "true") {
       button.classList.add("correct");
     } else if (button === selectedButton) {
-      (button.classList, add("incorrect"));
+      button.classList.add("incorrect");
     }
   });
   if (isCorrect) {
@@ -158,15 +158,16 @@ function showResults() {
   const percentage = (score / quizQuestions.length) * 100;
 
   if (percentage === 100) {
-    resultMessage.textContent = "Perfect! You are a genius!";
+    resultMessage.textContent = "Perfect! You are a genius! 🧠💪🎉";
+    resultScreen.style.backgroundColor = "green";
   } else if (percentage >= 80) {
-    resultMessage.textContent = "Great job! You know stuff!";
+    resultMessage.textContent = "Great job! You know stuff! 💪🧠";
   } else if (percentage >= 60) {
-    resultMessage.textContent = "Good effort! keep learning!";
+    resultMessage.textContent = "Good effort! keep learning! 🙏🏻👌";
   } else if (percentage >= 40) {
-    resultMessage.textContent = "Not bad! try agan to improve!";
+    resultMessage.textContent = "Not bad! try agan to improve! 😞";
   } else {
-    resultMessage.textContent = "Keep studting! You'll get better!";
+    resultMessage.textContent = "Keep studting! You'll get better! 😪😢";
   }
 }
 
