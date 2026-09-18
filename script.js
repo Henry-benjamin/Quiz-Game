@@ -13,3 +13,165 @@ const maxScoreSpan = document.getElementById("max-score");
 const resultMessage = document.getElementById("result-message");
 const restartButton = document.getElementById("restart-btn");
 const progressBar = document.getElementById("progress");
+
+const quizQuestions = [
+  {
+    question: "what is the capital city of DRcongo?",
+    answers: [
+      { text: "London", correct: false },
+      { text: "Berlin", correct: false },
+      { text: "Kinshasa", correct: true },
+      { text: "Madrid", correct: false },
+    ],
+  },
+  {
+    question: "what is the capital city of France?",
+    answers: [
+      { text: "London", correct: false },
+      { text: "Berlin", correct: false },
+      { text: "Paris", correct: true },
+      { text: "Madrid", correct: false },
+    ],
+  },
+  {
+    question: "what is the capital city of Kenya?",
+    answers: [
+      { text: "Kampala", correct: false },
+      { text: "Berlin", correct: false },
+      { text: "Nairobi", correct: true },
+      { text: "Madrid", correct: false },
+    ],
+  },
+  {
+    question: "what is the capital city of Rwanda?",
+    answers: [
+      { text: "London", correct: false },
+      { text: "Kigali", correct: true },
+      { text: "Berlin", correct: false },
+      { text: "Madrid", correct: false },
+    ],
+  },
+  {
+    question: "what is the capital city of France?",
+    answers: [
+      { text: "London", correct: false },
+      { text: "Berlin", correct: false },
+      { text: "Paris", correct: true },
+      { text: "Madrid", correct: false },
+    ],
+  },
+];
+
+// QUIZ SATE VARS
+let currentQuestionIndex = 0;
+let score = 0;
+let answersDisabled = false;
+
+totalQuestionsSpan.textContent = quizQuestions.length;
+maxScoreSpan.textContent = quizQuestions.length;
+
+// event listeners
+
+startButton.addEventListener("click", startQuiz);
+restartButton.addEventListener("click", restartQuiz);
+
+function startQuiz() {
+  //   reset vars
+  currentQuestionIndex = 0;
+  score = 0;
+  scoreSpan.textContent = 0;
+
+  startScreen.classList.remove("active");
+  quizScreen.classList.add("active");
+
+  showQuestion();
+}
+
+function showQuestion() {
+  // reset sate
+  answersDisabled = false;
+
+  const curentQuestion = quizQuestions[currentQuestionIndex];
+
+  currentQuestionSpan.textContent = currentQuestionIndex + 1;
+
+  const progressPercent = (currentQuestionIndex / quizQuestions.length) * 100;
+  progressBar.style.width = progressPercent + "%";
+
+  //  thinkig how to fix
+  questionText.textContent = currentQuestion.question;
+
+  //   todo explain this a
+  answersContainer.innerHTML = "";
+  //   thinkig how to fix
+  currentQuestion.answers.forEach((answer) => {
+    const button = document.createElement("button");
+    button.textContent = answer.text;
+    button.classList.add("answer-btn");
+
+    // what is a dataset? it is a property of element that allows you to store custom data.
+    button.dataset.correct = answer.correct;
+
+    button.addEventListener("click", selectAnswer);
+
+    answersContainer.appendChild(button);
+  });
+}
+function selectAnswer(event) {
+  // optimization check
+  if (answersDisabled) return;
+
+  answersDisabled = true;
+
+  const selectedButton = event.target;
+  const isCorrect = selectedButton.dataset.correct === "true";
+
+  //Here Array/form() is used to convert the NodeList returned by answersContainer.children into an Array, this is because the NodeList is not an Array and we need to use the forEach() method
+  Array.from(answersContainer.children).forEach((button) => {
+    if (button.dataset.correct === "true") {
+      button.classList.add("correct");
+    } else if (button === selectedButton) {
+      (button.classList, add("incorrect"));
+    }
+  });
+  if (isCorrect) {
+    score++;
+    scoreSpan.textContent = score;
+  }
+  setTimeout(() => {
+    currentQuestionIndex++;
+    // check if there are questions or if the quiz is over
+    if (currentQuestionIndex < quizQuestions.length) {
+      showQuestion();
+    } else {
+      showResults();
+    }
+  }, 1000);
+}
+
+function showResults() {
+  quizScreen.classList.remove("active");
+  resultScreen.classList.add("active");
+
+  finalScoreSpan.textContent = score;
+
+  const percentage = (score / quizQuestions.length) * 100;
+
+  if (percentage === 100) {
+    resultMessage.textContent = "Perfect! You are a genius!";
+  } else if (percentage >= 80) {
+    resultMessage.textContent = "Great job! You know stuff!";
+  } else if (percentage >= 60) {
+    resultMessage.textContent = "Good effort! keep learning!";
+  } else if (percentage >= 40) {
+    resultMessage.textContent = "Not bad! try agan to improve!";
+  } else {
+    resultMessage.textContent = "Keep studting! You'll get better!";
+  }
+}
+
+function restartQuiz() {
+  resultScreen.classList.remove("active");
+
+  startQuiz();
+}
