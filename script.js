@@ -13,6 +13,7 @@ const maxScoreSpan = document.getElementById("max-score");
 const resultMessage = document.getElementById("result-message");
 const restartButton = document.getElementById("restart-btn");
 const progressBar = document.getElementById("progress");
+const paragraph = document.getElementById("para-finals");
 
 const quizQuestions = [
   {
@@ -158,8 +159,10 @@ function showResults() {
   const percentage = (score / quizQuestions.length) * 100;
 
   if (percentage === 100) {
-    resultMessage.textContent = "Perfect! You are a genius! 🧠💪🎉";
+    resultMessage.textContent = "Perfect! You are a genius! 🏆🧠🎉";
+    resultMessage.style.color = "#ffff";
     resultScreen.style.backgroundColor = "green";
+    paragraph.style.color = "#fff";
   } else if (percentage >= 80) {
     resultMessage.textContent = "Great job! You know stuff! 💪🧠";
   } else if (percentage >= 60) {
